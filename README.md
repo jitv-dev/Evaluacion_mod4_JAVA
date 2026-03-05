@@ -39,6 +39,85 @@ SmartTask/
 
 ---
 
+## 📦 Cómo compilar y ejecutar el `.jar` desde consola
+
+El archivo `MANIFEST.MF` ya está configurado con `Main-Class: smarttask.MenuPrincipal`, así que el `.jar` sabe qué clase arrancar.
+
+### Paso 1 — Compilar los fuentes
+
+```bash
+# Desde la raíz del proyecto (donde está la carpeta src/)
+javac -d out src/smarttask/*.java
+```
+
+Esto genera los `.class` compilados dentro de la carpeta `out/`.
+
+### Paso 2 — Crear el `.jar`
+
+```bash
+jar cfm SmartTask.jar MANIFEST.MF -C out .
+```
+
+| Flag | Significado |
+|------|-------------|
+| `c`  | crear un nuevo archivo `.jar` |
+| `f`  | el siguiente argumento es el nombre del archivo |
+| `m`  | incluir el `MANIFEST.MF` que indica la clase principal |
+| `-C out .` | tomar los `.class` de la carpeta `out/` |
+
+### Paso 3 — Ejecutar
+
+```bash
+java -jar SmartTask.jar
+```
+
+Deberías ver el banner de bienvenida y el menú interactivo directamente en la consola.
+
+> **Nota:** necesitas tener el JDK 8 o superior instalado y el comando `java` disponible en el PATH del sistema. Puedes verificarlo con `java -version`.
+
+---
+
+## 📄 Qué es JavaDoc y cómo generarlo
+
+**JavaDoc** es la herramienta oficial de Java para generar documentación técnica en formato HTML a partir de los comentarios especiales `/** ... */` que ya están escritos en todo el código del proyecto. El resultado es un sitio web navegable similar a la documentación oficial de Java.
+
+Todos los archivos del proyecto ya tienen sus comentarios JavaDoc completos, por ejemplo:
+
+```java
+/**
+ * Agrega una {@link TareaNormal} a la lista.
+ *
+ * @param nombre    descripción de la tarea
+ * @param prioridad "ALTA", "MEDIA" o "BAJA"
+ * @return la tarea creada con su ID asignado
+ */
+public TareaNormal agregarTareaNormalLogica(String nombre, String prioridad) { ... }
+```
+
+### Generar el HTML desde consola
+
+```bash
+# Desde la raíz del proyecto
+javadoc -d docs -sourcepath src -subpackages smarttask
+```
+
+| Opción | Significado |
+|--------|-------------|
+| `-d docs` | carpeta de destino donde se genera el HTML |
+| `-sourcepath src` | dónde están los archivos fuente |
+| `-subpackages smarttask` | procesar todo el paquete `smarttask` |
+
+Después de ejecutarlo, abre `docs/index.html` en cualquier navegador para ver la documentación generada.
+
+### Generar desde IntelliJ IDEA
+
+1. Menú **Tools → Generate JavaDoc...**
+2. En "Output directory" escribe la ruta a una carpeta `docs/` dentro del proyecto.
+3. Haz clic en **OK**.
+4. IntelliJ generará el HTML y abrirá el `index.html` automáticamente.
+
+---
+
 ## 📐 Lecciones implementadas
 
 ### Lección 1 — El lenguaje Java y su entorno
